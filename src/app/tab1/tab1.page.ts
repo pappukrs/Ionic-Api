@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-tab1',
@@ -6,7 +8,18 @@ import { Component } from '@angular/core';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+  products!: any[];
 
-  constructor() {}
+  constructor(private http: HttpClient) {
+    this.loadProducts();
+  }
+
+
+  loadProducts() {
+  this.http.get<any[]>('https://fakestoreapi.com/products')
+    .subscribe(data => {
+      this.products = data;
+    });
+}
 
 }
